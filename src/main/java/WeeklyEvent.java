@@ -1,6 +1,6 @@
-package calendar;
 
 import java.util.GregorianCalendar;
+import calendar.MeetingCalendar;
 
 public class WeeklyEvent extends CalendarEvent {
 	

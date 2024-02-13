@@ -1,14 +1,14 @@
-package calendar;
 
 import java.util.GregorianCalendar;
+import calendar.MeetingCalendar;
 
-public class MultiDayWeekEvent extends CalendarEvent {
+public class MultiDayPerWeekEvent extends CalendarEvent {
 
 	private GregorianCalendar repeatUntil;
-	private int[] days;
+	private int days[];
 	
-	public MultiDayWeekEvent(String description, String location, GregorianCalendar startTime,
-			GregorianCalendar endTime, GregorianCalendar repeatUntil, int[] days) {
+	public MultiDayPerWeekEvent(String description, String location, GregorianCalendar startTime,
+			GregorianCalendar endTime, GregorianCalendar repeatUntil, int days[]) {
 		super(description, location, startTime, endTime);
 		this.repeatUntil = repeatUntil;
 		this.days = days;
@@ -19,7 +19,7 @@ public class MultiDayWeekEvent extends CalendarEvent {
 	 * @return the repeatUntil
 	 */
 	public GregorianCalendar getRepeatUntil() {
-		return repeatUntil;
+		return this.repeatUntil;
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class MultiDayWeekEvent extends CalendarEvent {
 	 * @return the days
 	 */
 	public int[] getDays() {
-		return days;
+		return this.days;
 	}
 
 	/**

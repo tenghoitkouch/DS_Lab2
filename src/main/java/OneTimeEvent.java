@@ -1,10 +1,10 @@
-package calendar;
 
 import java.util.GregorianCalendar;
+import calendar.MeetingCalendar;
 
-public class PriorityEvent extends CalendarEvent {
+public class OneTimeEvent extends CalendarEvent {
 
-	public PriorityEvent(String description, String location, GregorianCalendar startTime, GregorianCalendar endTime) {
+	public OneTimeEvent(String description, String location, GregorianCalendar startTime, GregorianCalendar endTime) {
 		super(description, location, startTime, endTime);
 		// TODO Auto-generated constructor stub
 	}
