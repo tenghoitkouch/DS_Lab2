@@ -28,7 +28,7 @@ class CalendarEventTest {
 
 	@Test
 	void testSetDescription() {
-		graduation.setDescription("This is my graduation.");
+		graduation.setDescription("This is my graduation");
 		assertEquals("This is my graduation", graduation.getDescription());
 	}
 
