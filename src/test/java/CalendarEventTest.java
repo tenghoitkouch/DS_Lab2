@@ -4,6 +4,7 @@ import java.util.GregorianCalendar;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.Arrays;
 
 class CalendarEventTest {
 	
@@ -17,7 +18,7 @@ class CalendarEventTest {
 		graduation = new OneTimeEvent("Graduation", "High School", new GregorianCalendar(2023,8,28,8,30), new GregorianCalendar(2023,8,28,9,30));
 		laundry = new WeeklyEvent("Laundry", "Home", new GregorianCalendar(2023,8,28,10,30), new GregorianCalendar(2023,8,28,12,30), new GregorianCalendar(2024,8,28));
 		
-		int days[] = {28, 29};
+		int[] days = {28, 29};
 		conference = new MultiDayPerWeekEvent("Conference", "City", new GregorianCalendar(2023,8,28,2,30), new GregorianCalendar(2023,8,28,4,30), new GregorianCalendar(2023,8,30), days);
 	}
 
@@ -78,15 +79,17 @@ class CalendarEventTest {
 	
 	@Test
 	void testMultiDayPerWeekEventGetDays() {
-		int days[] = {28,29};
-		assertEquals(days, conference.getDays());
+		int[] days = {28,29};
+		//assertEquals(days, conference.getDays());
+		assertEquals(true, Arrays.equals(days, conference.getDays()));
 	}
 	
 	@Test
 	void testMultiDayPerWeekEventSetDays() {
-		int days[] = {29,30};
+		int[] days = {29,30};
 		conference.setDays(days);
-		assertEquals(days, conference.getDays());
+		//assertEquals(days, conference.getDays());
+		assertEquals(true, Arrays.equals(days, conference.getDays()));
 	}
 
 }
