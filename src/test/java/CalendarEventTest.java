@@ -144,12 +144,12 @@ class CalendarEventTest {
 	void testPriorityEventDoesDisplace() {
 		String description6 = "Wedding";
 		String location6 = "Ranch";
-		GregorianCalendar startF = startA;
-		GregorianCalendar endF = endA;
+		GregorianCalendar startF = new GregorianCalendar(2023,8,28,8,30);
+		GregorianCalendar endF = new GregorianCalendar(2023,8,28,9,30);
 		PriorityEvent wedding = new PriorityEvent(description6, location6, startF, endF);
 		
 		appointment.scheduleEvent(gcal);
-		Meeting appointmentMeeting = gcal.findMeeting(startF);
+		Meeting appointmentMeeting = gcal.findMeeting(startA);
 		wedding.scheduleEvent(gcal);
 		
 		assertNotEquals(appointmentMeeting, gcal.findMeeting(startF));
