@@ -184,38 +184,21 @@ class CalendarEventTest {
 		GregorianCalendar startH = new GregorianCalendar(2023,8,28,8,30);
 		GregorianCalendar endH = new GregorianCalendar(2023,8,28,9,30);
 		GregorianCalendar repeatUntilH = new GregorianCalendar(2023,8,30,8,30);
-		int[] testingDays = {Calendar.MONDAY,Calendar.TUESDAY,Calendar.WEDNESDAY};
+		int[] testingDays = {Calendar.THURSDAY,Calendar.FRIDAY,Calendar.SATURDAY};
 		MultiDayPerWeekEvent gaming = new MultiDayPerWeekEvent(d8, l8, startH, endH, repeatUntilH, testingDays);
 		
 		Meeting graduationMeeting = new Meeting(description1, location1, startA, endA);
+		System.out.println(graduationMeeting);		
 		graduation.scheduleEvent(gcal);
 		assertEquals(graduationMeeting, gcal.findMeeting(startA));
 		
-		//Meeting gamingMeeting = new Meeting(d8, l8, startH, endH);
+		Meeting gamingMeeting = new Meeting(d8, l8, startH, endH);
+		System.out.println(gamingMeeting);
 		gaming.scheduleEvent(gcal);
-		assertEquals(graduationMeeting, gcal.findMeeting(startA));
+		assertEquals(graduationMeeting, gcal.findMeeting(startH));
 		
 		
-		/*
-		String D = "D";
-		String L = "L";
-		String D2 = "D2";
-		String L2 = "L2";
-		GregorianCalendar S = new GregorianCalendar(2023,8,28,8,30);
-		GregorianCalendar E = new GregorianCalendar(2023,8,28,9,30);
-		GregorianCalendar R = new GregorianCalendar(2023,8,30,8,30);
-		int[] testingDays = {Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY};
 		
-		OneTimeEvent ONE = new OneTimeEvent(D, L, S, E);
-		MultiDayPerWeekEvent WD = new MultiDayPerWeekEvent(D2, L2, S, E, R, testingDays);
-
-		Meeting test1 = new Meeting(D, L, S, E);
-		ONE.scheduleEvent(gcal);
-		assertEquals(test1, gcal.findMeeting(S));
-
-		WD.scheduleEvent(gcal);
-		assertEquals(test1, gcal.findMeeting(S));
-		*/
 	}
 
 	@Test
