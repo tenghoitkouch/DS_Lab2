@@ -7,6 +7,7 @@ import calendar.Meeting;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
+import java.util.Calendar;
 
 class CalendarEventTest {
 	
@@ -34,7 +35,7 @@ class CalendarEventTest {
 	String location3 = "Home";
 	GregorianCalendar startC = new GregorianCalendar(2023,8,28,6,30);
 	GregorianCalendar endC = new GregorianCalendar(2023,8,28,8,30);
-	GregorianCalendar repeatUntilC = new GregorianCalendar(2023,9,28,8,30);
+	GregorianCalendar repeatUntilC = new GregorianCalendar(2023,9,4,8,30);
 
 	//multidayperweekevent
 	String description4 = "Conference";
@@ -42,7 +43,7 @@ class CalendarEventTest {
 	GregorianCalendar startD = new GregorianCalendar(2023,8,28,12,30);
 	GregorianCalendar endD = new GregorianCalendar(2023,8,28,14,30);
 	GregorianCalendar repeatUntilD = new GregorianCalendar(2023,8,30,8,30);
-	int[] days = {28,29};
+	int[] days = {Calendar.MONDAY,Calendar.TUESDAY,Calendar.WEDNESDAY};
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -109,17 +110,17 @@ class CalendarEventTest {
 	
 	@Test
 	void testMultiDayPerWeekEventGetDays() {
-		int[] days = {28,29};
+		int[] testingDays = {Calendar.MONDAY,Calendar.TUESDAY,Calendar.WEDNESDAY};
 		//assertEquals(days, conference.getDays());
-		assertEquals(true, Arrays.equals(days, conference.getDays()));
+		assertEquals(true, Arrays.equals(testingDays, conference.getDays()));
 	}
 	
 	@Test
 	void testMultiDayPerWeekEventSetDays() {
-		int[] days = {29,30};
-		conference.setDays(days);
+		int[] testingDays = {Calendar.MONDAY,Calendar.TUESDAY,Calendar.WEDNESDAY};
+		conference.setDays(testingDays);
 		//assertEquals(days, conference.getDays());
-		assertEquals(true, Arrays.equals(days, conference.getDays()));
+		assertEquals(true, Arrays.equals(testingDays, conference.getDays()));
 	}
 	
 	@Test
@@ -137,7 +138,6 @@ class CalendarEventTest {
 		relax.scheduleEvent(gcal);
 		
 		assertEquals(graduationMeeting, gcal.findMeeting(startA));
-		//gcal.findMeeting(startE);
 	}
 
 	@Test
@@ -148,10 +148,147 @@ class CalendarEventTest {
 		GregorianCalendar endF = new GregorianCalendar(2023,8,28,9,30);
 		PriorityEvent wedding = new PriorityEvent(description6, location6, startF, endF);
 		
-		appointment.scheduleEvent(gcal);
-		Meeting appointmentMeeting = gcal.findMeeting(startA);
+		Meeting graduationMeeting = new Meeting(description1, location1, startA, endA);
+		graduation.scheduleEvent(gcal);
+		assertEquals(graduationMeeting, gcal.findMeeting(startA));
+		
+		Meeting weddingMeeting = new Meeting(description6, location6, startF, endF);
 		wedding.scheduleEvent(gcal);
 		
-		assertNotEquals(appointmentMeeting, gcal.findMeeting(startF));
+		assertEquals(weddingMeeting, gcal.findMeeting(startF));
+	}
+	
+	@Test
+	void testWeeklyEventDoesNotDisplace() {
+		String description7 = "Crying";
+		String location7 = "Home";
+		GregorianCalendar startG = new GregorianCalendar(2023,8,28,8,30);
+		GregorianCalendar endG = new GregorianCalendar(2023,8,28,9,30);
+		GregorianCalendar repeatUntilG = new GregorianCalendar(2023,9,28,8,30);
+		WeeklyEvent crying = new WeeklyEvent(description7, location7, startG, endG, repeatUntilG);
+		
+		Meeting graduationMeeting = new Meeting(description1, location1, startA, endA);
+		graduation.scheduleEvent(gcal);
+		assertEquals(graduationMeeting, gcal.findMeeting(startA));
+		
+		Meeting cryingMeeting = new Meeting(description7, location7, startG, endG);
+		crying.scheduleEvent(gcal);
+		assertEquals(graduationMeeting, gcal.findMeeting(startG));
+	}
+	
+	@Test
+	void testMultiDayPerWeekDoesNotDisplace(){
+		
+		String d8 = "Gaming";
+		String l8 = "Home";
+		GregorianCalendar startH = new GregorianCalendar(2023,8,28,8,30);
+		GregorianCalendar endH = new GregorianCalendar(2023,8,28,9,30);
+		GregorianCalendar repeatUntilH = new GregorianCalendar(2023,8,30,8,30);
+		int[] testingDays = {Calendar.MONDAY,Calendar.TUESDAY,Calendar.WEDNESDAY};
+		MultiDayPerWeekEvent gaming = new MultiDayPerWeekEvent(d8, l8, startH, endH, repeatUntilH, testingDays);
+		
+		Meeting graduationMeeting = new Meeting(description1, location1, startA, endA);
+		graduation.scheduleEvent(gcal);
+		assertEquals(graduationMeeting, gcal.findMeeting(startA));
+		
+		//Meeting gamingMeeting = new Meeting(d8, l8, startH, endH);
+		gaming.scheduleEvent(gcal);
+		assertEquals(graduationMeeting, gcal.findMeeting(startA));
+		
+		
+		/*
+		String D = "D";
+		String L = "L";
+		String D2 = "D2";
+		String L2 = "L2";
+		GregorianCalendar S = new GregorianCalendar(2023,8,28,8,30);
+		GregorianCalendar E = new GregorianCalendar(2023,8,28,9,30);
+		GregorianCalendar R = new GregorianCalendar(2023,8,30,8,30);
+		int[] testingDays = {Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY};
+		
+		OneTimeEvent ONE = new OneTimeEvent(D, L, S, E);
+		MultiDayPerWeekEvent WD = new MultiDayPerWeekEvent(D2, L2, S, E, R, testingDays);
+
+		Meeting test1 = new Meeting(D, L, S, E);
+		ONE.scheduleEvent(gcal);
+		assertEquals(test1, gcal.findMeeting(S));
+
+		WD.scheduleEvent(gcal);
+		assertEquals(test1, gcal.findMeeting(S));
+		*/
+	}
+
+	@Test
+	void testRepeatMeeting() {
+		String d9 = "Race";
+		String l9 = "Track";
+		GregorianCalendar startI = new GregorianCalendar(2023,9,15,8,30);
+		GregorianCalendar endI = new GregorianCalendar(2023,9,15,9,30);
+		GregorianCalendar repeatUntilI = new GregorianCalendar(2023,9,22,9,30);
+		WeeklyEvent race = new WeeklyEvent(d9, l9, startI, endI, repeatUntilI);
+		
+		GregorianCalendar start1 = new GregorianCalendar(2023,9,15,8,30);
+		GregorianCalendar end1 = new GregorianCalendar(2023,9,15,9,30);
+		GregorianCalendar start2 = new GregorianCalendar(2023,9,22,8,30);
+		GregorianCalendar end2 = new GregorianCalendar(2023,9,22,9,30);	
+		GregorianCalendar start3 = new GregorianCalendar(2023,9,29,8,30);
+		GregorianCalendar end3 = new GregorianCalendar(2023,9,29,9,30);	
+		
+		Meeting test1 = new Meeting(d9, l9, start1, end1);
+		Meeting test2 = new Meeting(d9, l9, start2, end2);
+		Meeting test3 = new Meeting(d9, l9, start3, end3);
+		
+		race.scheduleEvent(gcal);
+		assertEquals(test1, gcal.findMeeting(startI));
+		assertEquals(test2, gcal.findMeeting(start2));
+		assertNull(gcal.findMeeting(start3));
+	}
+	
+	@Test
+	void testMultiDayPerWeekEventDoesNotEveryday() {
+		GregorianCalendar startJ = new GregorianCalendar(2023,8,31,8,30);
+		GregorianCalendar endJ = new GregorianCalendar(2023,8,31,9,30);
+		
+		Meeting test1 = new Meeting(description4, location4, startD, endD);
+		Meeting test2 = new Meeting(description4, location4, startJ, endJ);
+		conference.scheduleEvent(gcal);
+		
+		assertFalse(gcal.doesMeetingConflict(test1));
+		assertFalse(gcal.doesMeetingConflict(test2));
+	}
+	
+	@Test
+	void testConstructorOTE() {
+		assertEquals("Graduation", graduation.getDescription());
+		assertEquals("High School", graduation.getLocation());
+		assertEquals(startA, graduation.getStartTime());
+		assertEquals(endA, graduation.getEndTime());
+	}
+	
+	@Test
+	void testConstructorPE() {
+		assertEquals("Appointment", appointment.getDescription());
+		assertEquals("Hospital", appointment.getLocation());
+		assertEquals(startB, appointment.getStartTime());
+		assertEquals(endB, appointment.getEndTime());
+	}
+	
+	@Test
+	void testConstructorWE() {
+		assertEquals("Laundry", laundry.getDescription());
+		assertEquals("Home", laundry.getLocation());
+		assertEquals(startC, laundry.getStartTime());
+		assertEquals(endC, laundry.getEndTime());
+		assertEquals(repeatUntilC, laundry.getRepeatUntil());
+	}
+	
+	@Test
+	void testConstructorMDPWE() {
+		assertEquals("Conference", conference.getDescription());
+		assertEquals("City", conference.getLocation());
+		assertEquals(startD, conference.getStartTime());
+		assertEquals(endD, conference.getEndTime());
+		assertEquals(repeatUntilD, conference.getRepeatUntil());
+		assertEquals(days, conference.getDays());
 	}
 }
