@@ -1,6 +1,7 @@
-
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import calendar.MeetingCalendar;
+import calendar.Meeting;
 
 public class WeeklyEvent extends CalendarEvent {
 	
@@ -15,7 +16,18 @@ public class WeeklyEvent extends CalendarEvent {
 	@Override
 	public void scheduleEvent(MeetingCalendar cal) {
 		// TODO Auto-generated method stub
-		Meeting meeting = new Meeting(description, location, startTime, endTime);
+		
+		GregorianCalendar currentStartTime = this.getStartTime();
+		GregorianCalendar currentEndTime = this.getEndTime();
+
+		while(currentStartTime.compareTo(this.getRepeatUntil()) <= 0){
+			Meeting meeting = new Meeting(this.getDescription(), this.getLocation(), currentStartTime, currentEndTime);
+			cal.addMeeting(meeting);
+
+			currentStartTime.add(Calendar.DAY_OF_MONTH, 7);
+			currentEndTime.add(Calendar.DAY_OF_MONTH, 7);
+		}
+		
 	}
 
 	/**
