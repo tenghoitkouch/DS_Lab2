@@ -12,7 +12,8 @@ public class OneTimeEvent extends CalendarEvent {
 	@Override
 	public void scheduleEvent(MeetingCalendar cal) {
 		// TODO Auto-generated method stub
-
+		Meeting meeting = new Meeting(this.description, this.location, this.startTime, this.endTime);
+		cal.addMeeting(meeting);
 	}
 
 }
