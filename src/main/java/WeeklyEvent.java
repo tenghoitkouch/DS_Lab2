@@ -15,7 +15,7 @@ public class WeeklyEvent extends CalendarEvent {
 	@Override
 	public void scheduleEvent(MeetingCalendar cal) {
 		// TODO Auto-generated method stub
-
+		Meeting meeting = new Meeting(description, location, startTime, endTime);
 	}
 
 	/**
