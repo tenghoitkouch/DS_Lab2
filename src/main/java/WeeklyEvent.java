@@ -22,6 +22,7 @@ public class WeeklyEvent extends CalendarEvent {
 
 		while(currentStartTime.compareTo(this.getRepeatUntil()) <= 0){
 			Meeting meeting = new Meeting(this.getDescription(), this.getLocation(), currentStartTime, currentEndTime);
+			System.out.println(meeting);
 			cal.addMeeting(meeting);
 
 			currentStartTime.add(Calendar.DAY_OF_MONTH, 7);
