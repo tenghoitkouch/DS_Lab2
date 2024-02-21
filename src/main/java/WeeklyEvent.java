@@ -17,16 +17,26 @@ public class WeeklyEvent extends CalendarEvent {
 	public void scheduleEvent(MeetingCalendar cal) {
 		// TODO Auto-generated method stub
 		
-		GregorianCalendar currentStartTime = this.getStartTime();
-		GregorianCalendar currentEndTime = this.getEndTime();
+		GregorianCalendar currentStartTime = new GregorianCalendar();
+		currentStartTime = (GregorianCalendar)this.getStartTime().clone();
 
-		while(currentStartTime.compareTo(this.getRepeatUntil()) <= 0){
-			Meeting meeting = new Meeting(this.getDescription(), this.getLocation(), currentStartTime, currentEndTime);
-			System.out.println(meeting);
+		GregorianCalendar currentEndTime = new GregorianCalendar();
+		currentEndTime = (GregorianCalendar)this.getEndTime().clone();
+
+		while(currentStartTime.compareTo(this.getRepeatUntil()) < 0){
+
+			GregorianCalendar tempStartTime = new GregorianCalendar();
+			tempStartTime = (GregorianCalendar)currentStartTime.clone();
+			GregorianCalendar tempEndTime = new GregorianCalendar();
+			tempEndTime = (GregorianCalendar)currentEndTime.clone();
+
+			Meeting meeting = new Meeting(this.getDescription(), this.getLocation(), tempStartTime, tempEndTime);
+			//System.out.println(meeting);
 			cal.addMeeting(meeting);
 
 			currentStartTime.add(Calendar.DAY_OF_MONTH, 7);
 			currentEndTime.add(Calendar.DAY_OF_MONTH, 7);
+
 		}
 		
 	}

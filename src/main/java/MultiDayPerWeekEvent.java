@@ -49,14 +49,23 @@ public class MultiDayPerWeekEvent extends CalendarEvent {
 	public void scheduleEvent(MeetingCalendar cal) {
 		// TODO Auto-generated method stub
 
-		GregorianCalendar currentStartTime = this.getStartTime();
-		GregorianCalendar currentEndTime = this.getEndTime();
+		GregorianCalendar currentStartTime = new GregorianCalendar();
+		currentStartTime = (GregorianCalendar)this.getStartTime().clone();
 
-		while(currentStartTime.compareTo(this.getRepeatUntil()) <= 0){
+		GregorianCalendar currentEndTime = new GregorianCalendar();
+		currentEndTime = (GregorianCalendar)this.getEndTime().clone();
+
+		while(currentStartTime.compareTo(this.getRepeatUntil()) < 0){
+
+			GregorianCalendar tempStartTime = new GregorianCalendar();
+			tempStartTime = (GregorianCalendar)currentStartTime.clone();
+			GregorianCalendar tempEndTime = new GregorianCalendar();
+			tempEndTime = (GregorianCalendar)currentEndTime.clone();
 
 			for (int day : this.getDays()) {
-				if (day == currentStartTime.DAY_OF_WEEK) {
-					Meeting meeting = new Meeting(this.getDescription(), this.getLocation(), currentStartTime, currentEndTime);
+				if (currentStartTime.get(Calendar.DAY_OF_WEEK) == day) {
+					Meeting meeting = new Meeting(this.getDescription(), this.getLocation(), tempStartTime, tempEndTime);
+					System.out.println(meeting);
 					cal.addMeeting(meeting);
 					break;
 				}
